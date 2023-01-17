@@ -24,4 +24,5 @@ while 1:
                     print(e)
                 finally:
                     print("——" * 10)
-                    sleep(3600)
+                    sleep(60)
+                    # sleep(3600)
