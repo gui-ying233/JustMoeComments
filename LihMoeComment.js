@@ -1,17 +1,15 @@
 fetch(
 	"https://raw.githubusercontent.com/gui-ying233/LihMoeFlowThreadSync/main/Lih萌百镜像站flowthread.json"
 )
-	.then(function (response) {
+	.then((response) => {
 		return response.json();
 	})
-	.then(function (data) {
+	.then((data) => {
 		if (data[mw.config.get("wgPageName")]) {
-			var flowThreadList = data[mw.config.get("wgPageName")].filter(
-				function (d) {
-					return !d.status;
-				}
+			const commentList = data[mw.config.get("wgPageName")].filter(
+				(d) => !d.status
 			);
-			var commentsSection = document.createElement("div");
+			const commentsSection = document.createElement("div");
 			commentsSection.id = "commentsSection";
 			commentsSection.style.cssText =
 				"display:flex;flex-wrap:wrap;justify-content:space-around;";
@@ -35,19 +33,11 @@ fetch(
 					// .appendChild(commentsSection);
 					break;
 			}
-			for (var i = 0; i < flowThreadList.length; i++) {
-				var c = flowThreadList[i];
-				var commentBox = document.createElement("div");
+			for (c of commentList) {
+				const commentBox = document.createElement("div");
 				commentBox.id = "comment-" + c.id;
 				commentBox.classList.add("commentBox");
-				commentBox.innerHTML =
-					'<div class="commentName"><a href="/U:' +
-					c.username +
-					'">' +
-					c.username +
-					'</a>：</div><div class="commentText">' +
-					c.text +
-					"</div>";
+				commentBox.innerHTML = `<div class="commentName"><a href="/U:${c.username}">${c.username}</a>：</div><div class="commentText">${c.text}</div>`;
 				if (c.parentid) {
 					document
 						.getElementById("comment-" + c.parentid)
@@ -58,26 +48,26 @@ fetch(
 						.appendChild(commentBox);
 				}
 			}
-			var selfLink = [].slice.call(
-				document.body.querySelectorAll(
+			const commentSelfLink = [
+				...document.body.querySelectorAll(
 					"#commentsSection a.mw-selflink.selflink"
-				)
-			);
-			selfLink.map(function (a) {
+				),
+			];
+			commentSelfLink.map((a) => {
 				a.classList.remove("mw-selflink", "selflink");
 				a.href = encodeURI("/U:鬼影233");
 			});
-			var img = [].slice.call(
-				document.body.querySelectorAll(
+			const commentImg = [
+				...document.body.querySelectorAll(
 					"#commentsSection img[src^='/images/']"
-				)
-			);
-			img.map(function (i) {
+				),
+			];
+			commentImg.map((i) => {
 				i.src =
 					"//img.moegirl.org.cn/common/" +
 					new URL(i.src).pathname.slice(8);
 			});
-			var commentCSS = document.createElement("style");
+			const commentCSS = document.createElement("style");
 			commentCSS.innerHTML =
 				".commentBox{flex:auto;margin:.25em;padding:.25em;border:1px solid;border-radius:.25em;}.commentName>a{border-bottom:1px dashed;}";
 			document.head.appendChild(commentCSS);
