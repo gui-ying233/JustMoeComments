@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         LihMoeComment
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.1
 // @description  萌百看Lih的镜像站的评论
 // @author       鬼影233
-// @match        https://*zh.moegirl.org.cn/*
+// @match        https://*.moegirl.org.cn/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=moegirl.org.cn
 // @grant        none
 // ==/UserScript==
