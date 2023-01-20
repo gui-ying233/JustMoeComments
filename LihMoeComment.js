@@ -46,7 +46,7 @@
 					// .appendChild(commentsSection);
 					break;
 			}
-			for (c of commentList) {
+			for (const c of commentList) {
 				const commentBox = document.createElement("div");
 				commentBox.id = "comment-" + c.id;
 				commentBox.classList.add("commentBox");
