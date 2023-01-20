@@ -1,4 +1,17 @@
-fetch(
+// ==UserScript==
+// @name         LihMoeComment
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  萌百看Lih的镜像站的评论
+// @author       鬼影233
+// @match        https://*zh.moegirl.org.cn/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=moegirl.org.cn
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    fetch(
 	"https://raw.githubusercontent.com/gui-ying233/LihMoeFlowThreadSync/main/Lih萌百镜像站flowthread.json"
 )
 	.then((response) => {
@@ -73,3 +86,4 @@ fetch(
 			document.head.appendChild(commentCSS);
 		}
 	});
+})();
