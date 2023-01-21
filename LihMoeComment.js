@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LihMoeComment
 // @namespace    http://tampermonkey.net/
-// @version      0.1.2
+// @version      0.1.3
 // @description  萌百看Lih的镜像站的评论
 // @author       鬼影233
 // @match        https://*.moegirl.org.cn/*
@@ -25,7 +25,7 @@
 				const commentsSection = document.createElement("div");
 				commentsSection.id = "commentsSection";
 				commentsSection.style.cssText =
-					"display:flex;flex-wrap:wrap;justify-content:space-around;";
+					"display:flex;flex-wrap:wrap;justify-content:space-around;gap:.25em;";
 				if (mw.config.get("skin") === "moeskin") {
 					commentsSection.style.cssText +=
 						"padding:.5em;border-bottom:1px dashed;background-color:var(--theme-background-color);line-height:1.75;";
@@ -66,10 +66,14 @@
 						"#commentsSection img[src^='/images/']"
 					),
 				];
-				commentImg.map((i) => {
+				commentImg.forEach((i) => {
 					i.src =
 						"//img.moegirl.org.cn/common/" +
 						new URL(i.src).pathname.slice(8);
+					i.srcset = i.srcset.replaceAll(
+						"/images/",
+						"//img.moegirl.org.cn/common/"
+					);
 				});
 				const commentCSS = document.createElement("style");
 				commentCSS.innerHTML =
