@@ -26,10 +26,6 @@
 				commentsSection.id = "commentsSection";
 				commentsSection.style.cssText =
 					"display:flex;flex-wrap:wrap;justify-content:space-around;gap:.25em;";
-				if (mw.config.get("skin") === "moeskin") {
-					commentsSection.style.cssText +=
-						"padding:.5em;border-bottom:1px dashed;background-color:var(--theme-background-color);line-height:1.75;";
-				}
 				switch (mw.config.get("skin")) {
 					case "vector":
 						document
@@ -38,6 +34,8 @@
 						break;
 					case "moeskin":
 					default:
+						commentsSection.style.cssText +=
+							"padding:.5em;border-bottom:1px dashed;background-color:var(--theme-background-color);line-height:1.75;";
 						document.body.getElementsByTagName(
 							"footer"
 						)[0].innerHTML =
