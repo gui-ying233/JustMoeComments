@@ -3338,5 +3338,31 @@
             "parentid": "06185ed63b813a4956ad8d",
             "status": 0
         }
+    ],
+    "IMPACT\u6d3e\u8499\u6bdb\u7ed2\u73a9\u5076\u5348\u996d\u4f11\u606f\u4eba\u5076\u6795\u5934\u73a9\u5076\u6795\u5934\u96cf\u796d\u52a8\u6f2b\u5468\u8fb9OPENCOSPLAY\u5c0f\u9053\u5177\u6795\u5934\u793c\u7269Birthday\u8d85\u67d4\u8f6f\u6bdb\u7ed2\u73a9\u5076\u5c0f\u4eba\u5076\u5750\u57ab\u6e38\u620f\u5468\u8fb9\u6bdb\u7ed2\u73a9\u5076COSPLAY\u4eba\u5076\u5c11\u5973\u5c11\u5e74\u52a8\u6f2b\u7c89\u4e1d\u5723\u8bde\u8282\u793c\u7269": [
+        {
+            "id": "0618b3b77b013a4956ad8d",
+            "userid": 9,
+            "username": "\u767d\u4e1d12323",
+            "text": "\u6211\u4e5f\u60f3\u4e70\u4e00\u4e2a......",
+            "parentid": null,
+            "status": 0
+        },
+        {
+            "id": "0618b3d747a13a4956ad8d",
+            "userid": 21,
+            "username": "Kaidousan",
+            "text": "\u8fd9\u4ec0\u4e48\u6761\u76ee\uff08",
+            "parentid": null,
+            "status": 0
+        },
+        {
+            "id": "0618b3fef3e13a4956ad8d",
+            "userid": 21,
+            "username": "Kaidousan",
+            "text": "\u5230\u6dd8\u5b9d\u4e0a\u770b\u770b\u6709\u6ca1\u6709\uff08",
+            "parentid": "0618b3b77b013a4956ad8d",
+            "status": 0
+        }
     ]
 }
