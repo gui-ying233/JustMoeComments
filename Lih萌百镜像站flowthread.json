@@ -3397,6 +3397,14 @@
             "text": "\u5982\u679c\u60f3\u770b\u66f4\u591a\u7ec6\u8282\uff0c\u6211\u4e4b\u540e\u518d\u7528AI\u751f\u6210\u4e00\u4e9b\uff08",
             "parentid": null,
             "status": 0
+        },
+        {
+            "id": "0619c73145213a4956ad8d",
+            "userid": 12,
+            "username": "BearBin",
+            "text": "\u597d\u6d3b\uff0c\u591a\u6574\u70b9",
+            "parentid": "0619c2e9b0613a4956ad8d",
+            "status": 0
         }
     ]
 }
