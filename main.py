@@ -6,7 +6,7 @@ while 1:
     newJSON = {}
 
     for _ in listdir("/Users/guiying/Downloads"):
-        if _[:4] == "萌娘百科" and _ [-15:] == "flowthread.json":
+        if _[:4] == "萌娘百科" and _[-15:] == "flowthread.json":
             try:
                 print(_)
                 rename("/Users/guiying/Downloads/" + _,
