@@ -11,10 +11,12 @@ while 1:
                 print(_)
                 rename("/Users/guiying/Downloads/" + _,
                        "./Lih萌百镜像站flowthread-原.json")
-                for _ in load(open("Lih萌百镜像站flowthread-原.json")):
-                    newJSON[_["title"]] = _["posts"]
-                open("Lih萌百镜像站flowthread.json", "w").write(
-                    dumps(newJSON, indent=4))
+                with open("Lih萌百镜像站flowthread-原.json", "r") as i, open("Lih萌百镜像站flowthread.json", "w") as o:
+                    for _ in load(i):
+                        newJSON[_["title"]] = _["posts"]
+                    i.close()
+                    o.write(dumps(newJSON, indent=4))
+                    o.close()
             finally:
                 try:
                     system('git add ./Lih萌百镜像站flowthread.json')
