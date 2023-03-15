@@ -1415,6 +1415,14 @@
             "text": "\u90a3\u4e2a\u5f69\u8679\u7528\u6237\u540d\u662f\u600e\u4e48\u56de\u4e8b233",
             "parentid": null,
             "status": 0
+        },
+        {
+            "id": "061b9716e642d34956ad8d",
+            "userid": 24,
+            "username": "Reiku",
+            "text": "<a href=\"/MediaWiki:Gadget-site-styles.css\" title=\"MediaWiki:Gadget-site-styles.css\">MediaWiki:Gadget-site-styles.css</a>",
+            "parentid": "061b94f9a3c2d34956ad8d",
+            "status": 0
         }
     ],
     "User:\u5b9e\u9a8c\u6027\uff1a\u65e0\u7528\u8bba\u5e9f\u4eba": [
