@@ -3109,6 +3109,16 @@
             "status": 0
         }
     ],
+    "\u7eca\u7684Allele": [
+        {
+            "id": "061dd53a73e2d34956ad8d",
+            "userid": 6,
+            "username": "\u9b3c\u5f71233",
+            "text": "\u7b2c\u4e00\u8bdd\u6709\u79cd\u538b\u69a8\u8001\u7231\u5269\u4f59\u4ef7\u503c\u7684\u611f\u89c9\uff0c\u7b2c\u4e8c\u8bdd\u66f4\u662f\u6ca1\u51fa\u573a\uff08",
+            "parentid": null,
+            "status": 0
+        }
+    ],
     "User:4O74Y7": [
         {
             "id": "06145036b861934956ad8d",
@@ -3718,6 +3728,14 @@
             "username": "Lihp",
             "text": "<ruby><rb data-id=\"template-ruby\">\u9b3c\u5f71233<span class=\"template-ruby-hidden\">\uff08</span></rb><rt style=\"font-size:0.75em\"><span title=\"\" class=\"heimu\">\u5c11\u5973\u756a\u4e4b\u738b</span></rt><span class=\"template-ruby-hidden\">\uff09</span></ruby>\u5f3a\u70c8\u63a8\u8350\uff01",
             "parentid": null,
+            "status": 0
+        },
+        {
+            "id": "061dd5152902d34956ad8d",
+            "userid": 6,
+            "username": "\u9b3c\u5f71233",
+            "text": "\u4ec0\u4e48\u9b3c\u5934\u8854",
+            "parentid": "061dd1482342d34956ad8d",
             "status": 0
         }
     ],
