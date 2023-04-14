@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    http://tampermonkey.net/
-// @version      2.0.0
+// @version      2.0.1
 // @description  萌百看Lih的镜像站的评论
 // @author       鬼影233
 // @match        *.moegirl.org.cn/*
@@ -13,7 +13,7 @@
 	"use strict";
 	function generatePost(post) {
 		const diff = Date.now() - post.timestamp * 1000;
-		if (0 < diff && diff < 86400000) {
+		if (diff > 0 && diff < 86400000) {
 			var timestamp = moment(post.timestamp * 1000)
 				.locale(mw.config.get("wgUserLanguage"))
 				.fromNow();
@@ -22,7 +22,7 @@
 				.locale(mw.config.get("wgUserLanguage"))
 				.format("LL, HH:mm:ss");
 		}
-		let postDiv = document.createElement("div");
+		const postDiv = document.createElement("div");
 		postDiv.className = "comment-thread";
 		postDiv.innerHTML = `<div class="comment-post"><div class="comment-avatar"><a href="//moegirl.uk/U:${
 			post.username
@@ -41,9 +41,9 @@
 			),
 		];
 		commentImg.forEach((i) => {
-			i.src =
-				"//img.moegirl.org.cn/common/" +
-				new URL(i.src).pathname.slice(8);
+			i.src = `//img.moegirl.org.cn/common/${new URL(
+				i.src
+			).pathname.slice(8)}`;
 			i.srcset = i.srcset.replaceAll(
 				"/images/",
 				"//img.moegirl.org.cn/common/"
@@ -69,11 +69,11 @@
 				commentCSS.innerHTML =
 					"#flowthread{clear:both;padding:1.5em}body.skin-moeskin #flowthread{background-color:var(--theme-background-color)}.comment-container-top:not(:empty){border:1px #ccc solid;border-radius:5px}body.skin-vector .comment-container-top{background-color:rgb(191 234 181 / 20%)}body.skin-moeskin .comment-container-top{background-color:var(--theme-card-background-color)}.comment-container-top>div:first-child{height:24px;line-height:24px;text-indent:1em;font-size:small;border-radius:5px 5px 0 0;font-weight:bold}body.skin-vector .comment-container-top>div:first-child{background-color:rgb(18 152 34 / 47%);color:#fff}body.skin-moeskin .comment-container-top>div:first-child{background-color:var(--theme-accent-color);color:var(--theme-accent-link-color)}.comment-thread{border-top:1px solid rgba(0,0,0,0.13)}.comment-thread .comment-thread{margin-left:40px}.comment-post{padding:10px}.comment-avatar{float:left}.comment-avatar img{width:50px;height:50px}.comment-body{padding-left:60px}.comment-user,.comment-user a{color:#777;font-size:13px;margin-right:8px}.post-content .comment-text{position:static}.comment-text{font-size:13px;line-height:1.5em;margin:.5em 0;word-wrap:break-word;position:relative;overflow:hidden;min-height:1em}.comment-footer{font-size:12px;margin-right:8px;color:#999}.comment-like{margin-left:5px}";
 				document.head.appendChild(commentCSS);
-				let containerTop = document.createElement("div");
+				const containerTop = document.createElement("div");
 				containerTop.className = "comment-container-top";
-				let container = document.createElement("div");
+				const container = document.createElement("div");
 				container.className = "comment-container";
-				let postContent = document.createElement("div");
+				const postContent = document.createElement("div");
 				postContent.id = "flowthread";
 				postContent.className = "post-content";
 				postContent.appendChild(containerTop);
@@ -112,7 +112,7 @@
 									"comment-container-top"
 								)[0].innerHTML = "<div>热门评论</div>";
 								for (const post of b.flowthread.popular) {
-									let _post = generatePost(post);
+									const _post = generatePost(post);
 									_post.classList.add("comment-popular");
 									document.body
 										.getElementsByClassName(
@@ -122,12 +122,12 @@
 								}
 							}
 							for (const post of b.flowthread.posts) {
-								let _post = generatePost(post);
+								const _post = generatePost(post);
 								_post.id = `comment-${post.id}`;
 								if (post.parentid) {
 									document
 										.getElementById(
-											"comment-" + post.parentid
+											`comment-${post.parentid}`
 										)
 										.appendChild(_post);
 								} else {
