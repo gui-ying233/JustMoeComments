@@ -9,7 +9,7 @@
 // @grant        none
 // ==/UserScript==
 
-(function () {
+$(function () {
 	"use strict";
 	function generatePost(post) {
 		const diff = Date.now() - post.timestamp * 1000;
