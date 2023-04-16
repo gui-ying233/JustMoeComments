@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    http://tampermonkey.net/
-// @version      2.1.0
+// @version      2.2.0
 // @description  萌百看Lih的镜像站的评论
 // @author       鬼影233
 // @match        *.moegirl.org.cn/*
