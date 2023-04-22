@@ -78,7 +78,9 @@
 							.then((b) => b.json())
 							.then((b) => {
 								if (b.query.pages[0].missing) {
-									a.href = "";
+									a.href = `/index.php?title=${a.pathname.slice(
+										1
+									)}&action=edit&redlink=1`;
 									a.title += " (页面不存在)";
 									a.classList += "new";
 								} else if (
