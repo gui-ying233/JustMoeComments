@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.3.0
+// @version      2.4.0
 // @description  萌百看Lih的镜像站的评论
 // @author       鬼影233
 // @license      MIT
@@ -44,12 +44,11 @@
 							? `<span class="comment-like">赞 ${post.like}</span>`
 							: ""
 					}</div></div></div>`;
-					const commentImg = [
+					[
 						...document.body.querySelectorAll(
 							"#flowthread img[src^='/images/']"
 						),
-					];
-					commentImg.forEach((i) => {
+					].forEach((i) => {
 						i.src = `//img.moegirl.org.cn/common/${new URL(
 							i.src
 						).pathname.slice(8)}`;
@@ -57,6 +56,42 @@
 							"/images/",
 							"//img.moegirl.org.cn/common/"
 						);
+					});
+					[
+						...document.body.querySelectorAll(
+							"#flowthread a.extiw[title^='moe:'], #flowthread a.extiw[title^='zhmoe:']"
+						),
+					].forEach((a) => {
+						a.classList.remove("extiw");
+						fetch(
+							`https://mzh.moegirl.org.cn/api.php?${new URLSearchParams(
+								{
+									action: "query",
+									format: "json",
+									titles: decodeURI(a.pathname.slice(1)),
+									utf8: 1,
+									formatversion: 2,
+									origin: "*",
+								}
+							)}`
+						)
+							.then((b) => b.json())
+							.then((b) => {
+								if (
+									b.query.pages[0].pageid ===
+									mw.config.get("wgArticleId")
+								) {
+									a.href = "";
+									a.title = "";
+									a.classList += "mw-selflink selflink";
+								} else {
+									a.href = a.pathname;
+									a.title = a.title.replace(
+										/moe:|zhmoe:/,
+										""
+									);
+								}
+							});
 					});
 					return postDiv;
 				}
