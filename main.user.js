@@ -77,7 +77,11 @@
 						)
 							.then((b) => b.json())
 							.then((b) => {
-								if (
+								if (b.query.pages[0].missing) {
+									a.href = "";
+									a.title += " (页面不存在)";
+									a.classList += "new";
+								} else if (
 									b.query.pages[0].pageid ===
 									mw.config.get("wgArticleId")
 								) {
