@@ -63,20 +63,15 @@
 						),
 					].forEach((a) => {
 						a.classList.remove("extiw");
-						fetch(
-							`https://mzh.moegirl.org.cn/api.php?${new URLSearchParams(
-								{
-									action: "query",
-									format: "json",
-									titles: decodeURI(a.pathname.slice(1)),
-									utf8: 1,
-									formatversion: 2,
-									origin: "*",
-								}
-							)}`
-						)
-							.then((b) => b.json())
-							.then((b) => {
+						new mw.Api()
+							.get({
+								action: "query",
+								format: "json",
+								titles: decodeURI(a.pathname.slice(1)),
+								utf8: 1,
+								formatversion: 2,
+							})
+							.done((b) => {
 								if (b.query.pages[0].missing) {
 									a.href = `/index.php?title=${a.pathname.slice(
 										1
