@@ -94,6 +94,16 @@
 								}
 							});
 					});
+					[
+						...document.body.querySelectorAll("#flowthread script"),
+					].forEach((s) => {
+						const _s = document.createElement("script");
+						_s.innerHTML = s.innerHTML;
+						[...s.attributes].forEach((a) => {
+							_s.setAttribute(a.name, a.value);
+						});
+						s.parentNode.replaceChild(_s, s);
+					});
 					return postDiv;
 				}
 				mw.loader.using(["moment"]).done(() => {
