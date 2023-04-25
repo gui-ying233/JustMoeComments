@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.4.0
+// @version      2.5.0
 // @description  萌百看Lih的镜像站的评论
 // @author       鬼影233
 // @license      MIT
