@@ -2,7 +2,7 @@
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
 // @version      2.6.0
-// @description  萌百看Lih的镜像站的评论
+// @description  萌娘百科看Lih的镜像站的评论
 // @author       鬼影233
 // @license      MIT
 // @match        *.moegirl.org.cn/*
