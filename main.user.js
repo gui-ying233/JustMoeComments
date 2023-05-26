@@ -26,12 +26,13 @@
 	) {
 		function generatePost(post) {
 			const diff = Date.now() - post.timestamp * 1000;
+			let timestamp;
 			if (diff > 0 && diff < 86400000) {
-				var timestamp = moment(post.timestamp * 1000)
+				timestamp = moment(post.timestamp * 1000)
 					.locale(mw.config.get("wgUserLanguage"))
 					.fromNow();
 			} else {
-				var timestamp = moment(post.timestamp * 1000)
+				timestamp = moment(post.timestamp * 1000)
 					.locale(mw.config.get("wgUserLanguage"))
 					.format("LL, HH:mm:ss");
 			}
