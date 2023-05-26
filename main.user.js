@@ -22,7 +22,7 @@
 
 	if (
 		mw.config.get("wgAction") === "view" &&
-		[0, 2, 12, 274].indexOf(mw.config.get("wgNamespaceNumber")) + 1
+		[0, 2, 12, 274].includes(mw.config.get("wgNamespaceNumber"))
 	) {
 		function generatePost(post) {
 			const diff = Date.now() - post.timestamp * 1000;
