@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.7.0
+// @version      2.8.0
 // @description  萌娘百科看Lih的镜像站的评论
 // @author       鬼影233
 // @license      MIT
@@ -50,22 +50,46 @@
 					? `<span class="comment-like">赞 ${post.like}</span>`
 					: ""
 			}</div></div></div>`;
+			[...postDiv.querySelectorAll("img[src^='/images/']")].forEach(
+				(i) => {
+					i.src = `//img.moegirl.org.cn/common/${new URL(
+						i.src
+					).pathname.slice(8)}`;
+					i.srcset = i.srcset.replaceAll(
+						"/images/",
+						"//img.moegirl.org.cn/common/"
+					);
+				}
+			);
 			[
-				...document.body.querySelectorAll(
-					"#flowthread img[src^='/images/']"
+				...postDiv.querySelectorAll(
+					'img[src*="thumb"][src$=".svg.png"], img[src*="thumb"][data-lazy-src$=".svg.png"], img[src*="thumb"][src$=".gif"], img[data-lazy-src*="thumb"][data-lazy-src$=".gif"]'
 				),
 			].forEach((i) => {
-				i.src = `//img.moegirl.org.cn/common/${new URL(
-					i.src
-				).pathname.slice(8)}`;
-				i.srcset = i.srcset.replaceAll(
-					"/images/",
-					"//img.moegirl.org.cn/common/"
-				);
+				try {
+					const _i = i.cloneNode();
+					if (
+						new mw.Uri(_i.src || _i.dataset.lazySrc).host ===
+						"img.moegirl.org.cn"
+					) {
+						_i.src = _i.src
+							.replace("/thumb/", "/")
+							.replace(/\.svg\/[^/]+\.svg\.png$/, ".svg")
+							.replace(/\.gif\/[^/]+\.gif$/, ".gif");
+						_i.removeAttribute("srcset");
+						_i.removeAttribute("data-lazy-src");
+						_i.removeAttribute("data-lazy-srcset");
+						_i.removeAttribute("data-lazy-state");
+						_i.classList.remove("lazyload");
+						_i.onload = function () {
+							i.replaceWith(_i);
+						};
+					}
+				} catch {}
 			});
 			[
-				...document.body.querySelectorAll(
-					"#flowthread a.extiw[title^='moe:'], #flowthread a.extiw[title^='zhmoe:']"
+				...postDiv.querySelectorAll(
+					"a.extiw[title^='moe:'], a.extiw[title^='zhmoe:']"
 				),
 			].forEach((a) => {
 				a.classList.remove("extiw");
@@ -97,16 +121,14 @@
 						}
 					});
 			});
-			[...document.body.querySelectorAll("#flowthread script")].forEach(
-				(s) => {
-					const _s = document.createElement("script");
-					_s.innerHTML = s.innerHTML;
-					[...s.attributes].forEach((a) => {
-						_s.setAttribute(a.name, a.value);
-					});
-					s.parentNode.replaceChild(_s, s);
-				}
-			);
+			[...postDiv.getElementsByTagName("script")].forEach((s) => {
+				const _s = document.createElement("script");
+				_s.innerHTML = s.innerHTML;
+				[...s.attributes].forEach((a) => {
+					_s.setAttribute(a.name, a.value);
+				});
+				s.parentNode.replaceChild(_s, s);
+			});
 			return postDiv;
 		}
 		mw.loader.using(["moment"]).done(() => {
