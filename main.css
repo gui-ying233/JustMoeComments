@@ -1,0 +1,84 @@
+#flowthread {
+	clear: both;
+	padding: 1.5em
+}
+body.skin-moeskin #flowthread {
+	background-color: var(--theme-background-color)
+}
+.comment-container-top:not(:empty) {
+	border: 1px #ccc solid;
+	border-radius: 5px
+}
+body.skin-vector .comment-container-top {
+	background-color: rgb(191 234 181 / 20%)
+}
+body.skin-moeskin .comment-container-top {
+	background-color: var(--theme-card-background-color)
+}
+.comment-container-top>div:first-child {
+	height: 24px;
+	line-height: 24px;
+	text-indent: 1em;
+	font-size: small;
+	border-radius: 5px 5px 0 0;
+	font-weight: bold
+}
+body.skin-vector .comment-container-top>div:first-child {
+	background-color: rgb(18 152 34 / 47%);
+	color: #fff
+}
+body.skin-moeskin .comment-container-top>div:first-child {
+	background-color: var(--theme-accent-color);
+	color: var(--theme-accent-link-color)
+}
+.comment-thread {
+	border-top: 1px solid rgba(0,0,0,0.13)
+}
+.comment-thread .comment-thread {
+	margin-left: 40px
+}
+.comment-post {
+	padding: 10px
+}
+.comment-avatar {
+	float: left
+}
+.comment-avatar img {
+	width: 50px;
+	height: 50px
+}
+.comment-body {
+	padding-left: 60px
+}
+.comment-thread>div:not(:first-of-type) .comment-avatar img {
+	width: 30px;
+	height: 30px
+}
+.comment-thread>div:not(:first-of-type) .comment-body {
+	padding-left: 40px
+}
+.comment-user,.comment-user a {
+	color: #777;
+	font-size: 13px;
+	margin-right: 8px
+}
+.post-content .comment-text {
+	position: static
+}
+.comment-text {
+	font-size: 13px;
+	line-height: 1.5em;
+	margin: .5em 0;
+	word-wrap: break-word;
+	position: relative;
+	overflow: hidden;
+	min-height: 1em
+}
+.comment-footer {
+	font-size: 12px;
+	margin-right: 8px;
+	color: #999
+}
+.comment-like {
+	margin-left: 5px
+}

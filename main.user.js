@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.8.1
+// @version      2.8.2
 // @description  萌娘百科看Lih的镜像站的评论
 // @author       鬼影233
 // @license      MIT
@@ -19,11 +19,11 @@
 			}
 		}, 50);
 	});
-
 	if (
 		mw.config.get("wgAction") === "view" &&
 		[0, 2, 12, 274].includes(mw.config.get("wgNamespaceNumber"))
 	) {
+		const api = new mw.Api();
 		function generatePost(post) {
 			const diff = Date.now() - post.timestamp * 1000;
 			let timestamp;
@@ -94,33 +94,30 @@
 				),
 			].forEach((a) => {
 				a.classList.remove("extiw");
-				new mw.Api()
-					.get({
-						action: "query",
-						format: "json",
-						titles: decodeURI(a.pathname.slice(1)),
-						utf8: 1,
-						formatversion: 2,
-					})
-					.done((b) => {
-						if (b.query.pages[0].missing) {
-							a.href = `/index.php?title=${a.pathname.slice(
-								1
-							)}&action=edit&redlink=1`;
-							a.title += wgULS(" (页面不存在)", "（頁面不存在）");
-							a.classList += "new";
-						} else if (
-							b.query.pages[0].pageid ===
-							mw.config.get("wgArticleId")
-						) {
-							a.href = "";
-							a.title = "";
-							a.classList += "mw-selflink selflink";
-						} else {
-							a.href = a.pathname;
-							a.title = a.title.replace(/moe:|zhmoe:/, "");
-						}
-					});
+				api.get({
+					action: "query",
+					format: "json",
+					titles: decodeURI(a.pathname.slice(1)),
+					utf8: 1,
+					formatversion: 2,
+				}).done((b) => {
+					if (b.query.pages[0].missing) {
+						a.href = `/index.php?title=${a.pathname.slice(
+							1
+						)}&action=edit&redlink=1`;
+						a.title += wgULS(" (页面不存在)", "（頁面不存在）");
+						a.classList += "new";
+					} else if (
+						b.query.pages[0].pageid === mw.config.get("wgArticleId")
+					) {
+						a.href = "";
+						a.title = "";
+						a.classList += "mw-selflink selflink";
+					} else {
+						a.href = a.pathname;
+						a.title = a.title.replace(/moe:|zhmoe:/, "");
+					}
+				});
 			});
 			[...postDiv.getElementsByTagName("script")].forEach((s) => {
 				const _s = document.createElement("script");
