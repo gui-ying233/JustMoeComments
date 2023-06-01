@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.8.2
+// @version      2.8.3
 // @description  萌娘百科看Lih的镜像站的评论
 // @author       鬼影233
 // @license      MIT
-// @match        *.moegirl.org.cn/*
+// @match        zh.moegirl.org.cn/*
+// @match        mzh.moegirl.org.cn/*
+// @match        mobile.moegirl.org.cn/*
 // @icon         https://moegirl.uk/images/a/a2/%E7%B2%89%E8%89%B2%E5%A4%A7%E7%8C%9B%E5%AD%97.png
 // @supportURL   https://github.com/gui-ying233/JustMoeComments/issues
 // ==/UserScript==
@@ -16,6 +18,7 @@
 		setInterval(() => {
 			if (typeof mw !== "undefined" && typeof wgULS !== "undefined") {
 				resolve();
+				return;
 			}
 		}, 50);
 	});
