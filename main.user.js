@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.8.3
-// @description  萌娘百科看Lih的镜像站的评论
+// @version      2.9.0
+// @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
 // @match        zh.moegirl.org.cn/*
@@ -28,16 +28,20 @@
 	) {
 		const api = new mw.Api();
 		function generatePost(post) {
-			const diff = Date.now() - post.timestamp * 1000;
 			let timestamp;
-			if (diff > 0 && diff < 86400000) {
-				timestamp = moment(post.timestamp * 1000)
-					.locale(mw.config.get("wgUserLanguage"))
-					.fromNow();
+			if (typeof post.timestamp === "number") {
+				const diff = Date.now() - post.timestamp * 1000;
+				if (diff > 0 && diff < 86400000) {
+					timestamp = moment(post.timestamp * 1000)
+						.locale(mw.config.get("wgUserLanguage"))
+						.fromNow();
+				} else {
+					timestamp = moment(post.timestamp * 1000)
+						.locale(mw.config.get("wgUserLanguage"))
+						.format("LL, HH:mm:ss");
+				}
 			} else {
-				timestamp = moment(post.timestamp * 1000)
-					.locale(mw.config.get("wgUserLanguage"))
-					.format("LL, HH:mm:ss");
+				timestamp = post.timestamp;
 			}
 			const postDiv = document.createElement("div");
 			postDiv.className = "comment-thread";
@@ -201,6 +205,61 @@
 											)[0]
 											.appendChild(_post);
 									}
+								}
+								if (mw.config.get("skin") === "moeskin") {
+									setTimeout(() => {
+										if (
+											document.body.getElementsByClassName(
+												"artwork-title"
+											)[0]?.innerText ==
+											mw.config.get("wgPageName")
+										) {
+											document.body
+												.getElementsByClassName(
+													"comment-item"
+												)
+												.forEach((c) => {
+													const post = {
+														like: +c
+															.getElementsByClassName(
+																"n-button-group"
+															)[0]
+															.innerText.split(
+																"\n"
+															)[0],
+														username:
+															c.getElementsByClassName(
+																"comment-author"
+															)[0].innerText,
+														text:
+															c.getElementsByClassName(
+																"comment-title"
+															)[0].innerText +
+															(c.getElementsByClassName(
+																"comment-content"
+															)[0].innerText
+																? document.createElement(
+																		"br"
+																  ).outerHTML +
+																  c.getElementsByClassName(
+																		"comment-content"
+																  )[0].innerText
+																: ""),
+														timestamp:
+															c.getElementsByClassName(
+																"comment-time"
+															)[0].innerText,
+													};
+													document
+														.getElementsByClassName(
+															"comment-container"
+														)[0]
+														.appendChild(
+															generatePost(post)
+														);
+												});
+										}
+									}, 5000);
 								}
 								for (const post of b.flowthread.posts) {
 									const _post = generatePost(post);
