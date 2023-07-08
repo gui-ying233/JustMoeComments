@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.9.0
+// @version      2.9.1
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -219,44 +219,60 @@
 													"comment-item"
 												)
 												.forEach((c) => {
-													const post = {
-														like: +c
+													if (
+														c.getElementsByClassName(
+															"comment-title"
+														)[0].innerText ||
+														c.getElementsByClassName(
+															"comment-content"
+														)[0].innerText
+													) {
+														const post = {
+															like: +c
+																.getElementsByClassName(
+																	"n-button-group"
+																)[0]
+																.innerText.split(
+																	"\n"
+																)[0],
+															username:
+																c.getElementsByClassName(
+																	"comment-author"
+																)[0].innerText,
+															text:
+																c.getElementsByClassName(
+																	"comment-title"
+																)[0].innerText +
+																(c.getElementsByClassName(
+																	"comment-title"
+																)[0]
+																	.innerText &&
+																c.getElementsByClassName(
+																	"comment-content"
+																)[0].innerText
+																	? document.createElement(
+																			"br"
+																	  )
+																			.outerHTML
+																	: "") +
+																c.getElementsByClassName(
+																	"comment-content"
+																)[0].innerText,
+															timestamp:
+																c.getElementsByClassName(
+																	"comment-time"
+																)[0].innerText,
+														};
+														document
 															.getElementsByClassName(
-																"n-button-group"
+																"comment-container"
 															)[0]
-															.innerText.split(
-																"\n"
-															)[0],
-														username:
-															c.getElementsByClassName(
-																"comment-author"
-															)[0].innerText,
-														text:
-															c.getElementsByClassName(
-																"comment-title"
-															)[0].innerText +
-															(c.getElementsByClassName(
-																"comment-content"
-															)[0].innerText
-																? document.createElement(
-																		"br"
-																  ).outerHTML +
-																  c.getElementsByClassName(
-																		"comment-content"
-																  )[0].innerText
-																: ""),
-														timestamp:
-															c.getElementsByClassName(
-																"comment-time"
-															)[0].innerText,
-													};
-													document
-														.getElementsByClassName(
-															"comment-container"
-														)[0]
-														.appendChild(
-															generatePost(post)
-														);
+															.appendChild(
+																generatePost(
+																	post
+																)
+															);
+													}
 												});
 										}
 									}, 5000);
