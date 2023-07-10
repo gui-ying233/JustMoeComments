@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.9.1
+// @version      2.9.2
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -209,10 +209,22 @@
 								if (mw.config.get("skin") === "moeskin") {
 									setTimeout(() => {
 										if (
-											document.body.getElementsByClassName(
-												"artwork-title"
-											)[0]?.innerText ==
-											mw.config.get("wgPageName")
+											[
+												(mw.config.get("wgPageName"),
+												mw.config
+													.get("wgPageName")
+													.replace(
+														/^(.+)\(.+?\)$/,
+														"$1"
+													),
+												document.getElementById(
+													"firstHeading"
+												).innerText),
+											].includes(
+												document.body.getElementsByClassName(
+													"artwork-title"
+												)[0]?.innerText
+											)
 										) {
 											document.body
 												.getElementsByClassName(
