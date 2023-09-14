@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.9.2
+// @version      2.9.3
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -14,11 +14,11 @@
 
 (async function () {
 	"use strict";
-	await new Promise((resolve) => {
-		setInterval(() => {
+	await new Promise(resolve => {
+		const intervId = setInterval(() => {
 			if (typeof mw !== "undefined" && typeof wgULS !== "undefined") {
+				clearInterval(intervId);
 				resolve();
-				return;
 			}
 		}, 50);
 	});
@@ -58,22 +58,20 @@
 					? `<span class="comment-like">赞 ${post.like}</span>`
 					: ""
 			}</div></div></div>`;
-			[...postDiv.querySelectorAll("img[src^='/images/']")].forEach(
-				(i) => {
-					i.src = `//img.moegirl.org.cn/common/${new URL(
-						i.src
-					).pathname.slice(8)}`;
-					i.srcset = i.srcset.replaceAll(
-						"/images/",
-						"//img.moegirl.org.cn/common/"
-					);
-				}
-			);
+			[...postDiv.querySelectorAll("img[src^='/images/']")].forEach(i => {
+				i.src = `//img.moegirl.org.cn/common/${new URL(
+					i.src
+				).pathname.slice(8)}`;
+				i.srcset = i.srcset.replaceAll(
+					"/images/",
+					"//img.moegirl.org.cn/common/"
+				);
+			});
 			[
 				...postDiv.querySelectorAll(
 					'img[src*="thumb"][src$=".svg.png"], img[src*="thumb"][data-lazy-src$=".svg.png"], img[src*="thumb"][src$=".gif"], img[data-lazy-src*="thumb"][data-lazy-src$=".gif"]'
 				),
-			].forEach((i) => {
+			].forEach(i => {
 				try {
 					const _i = i.cloneNode();
 					if (
@@ -99,7 +97,7 @@
 				...postDiv.querySelectorAll(
 					"a.extiw[title^='moe:'], a.extiw[title^='zhmoe:']"
 				),
-			].forEach((a) => {
+			].forEach(a => {
 				a.classList.remove("extiw");
 				api.get({
 					action: "query",
@@ -107,7 +105,7 @@
 					titles: decodeURI(a.pathname.slice(1)),
 					utf8: 1,
 					formatversion: 2,
-				}).done((b) => {
+				}).done(b => {
 					if (b.query.pages[0].missing) {
 						a.href = `/index.php?title=${a.pathname.slice(
 							1
@@ -126,10 +124,10 @@
 					}
 				});
 			});
-			[...postDiv.getElementsByTagName("script")].forEach((s) => {
+			[...postDiv.getElementsByTagName("script")].forEach(s => {
 				const _s = document.createElement("script");
 				_s.innerHTML = s.innerHTML;
-				[...s.attributes].forEach((a) => {
+				[...s.attributes].forEach(a => {
 					_s.setAttribute(a.name, a.value);
 				});
 				s.parentNode.replaceChild(_s, s);
@@ -148,8 +146,8 @@
 					origin: "*",
 				})}`
 			)
-				.then((a) => a.json())
-				.then((a) => {
+				.then(a => a.json())
+				.then(a => {
 					const commentCSS = document.createElement("style");
 					commentCSS.innerHTML =
 						"#flowthread{clear:both;padding:1.5em}body.skin-moeskin #flowthread{background-color:var(--theme-background-color)}.comment-container-top:not(:empty){border:1px #ccc solid;border-radius:5px}body.skin-vector .comment-container-top{background-color:rgb(191 234 181 / 20%)}body.skin-moeskin .comment-container-top{background-color:var(--theme-card-background-color)}.comment-container-top>div:first-child{height:24px;line-height:24px;text-indent:1em;font-size:small;border-radius:5px 5px 0 0;font-weight:bold}body.skin-vector .comment-container-top>div:first-child{background-color:rgb(18 152 34 / 47%);color:#fff}body.skin-moeskin .comment-container-top>div:first-child{background-color:var(--theme-accent-color);color:var(--theme-accent-link-color)}.comment-thread{border-top:1px solid rgba(0,0,0,0.13)}.comment-thread .comment-thread{margin-left:40px}.comment-post{padding:10px}.comment-avatar{float:left}.comment-avatar img{width:50px;height:50px}.comment-body{padding-left:60px}.comment-thread>div:not(:first-of-type) .comment-avatar img{width:30px;height:30px}.comment-thread>div:not(:first-of-type) .comment-body{padding-left:40px}.comment-user,.comment-user a{color:#777;font-size:13px;margin-right:8px}.post-content .comment-text{position:static}.comment-text{font-size:13px;line-height:1.5em;margin:.5em 0;word-wrap:break-word;position:relative;overflow:hidden;min-height:1em}.comment-footer{font-size:12px;margin-right:8px;color:#999}.comment-like{margin-left:5px}";
@@ -190,8 +188,8 @@
 								origin: "*",
 							})}`
 						)
-							.then((b) => b.json())
-							.then((b) => {
+							.then(b => b.json())
+							.then(b => {
 								if (b.flowthread.popular.length) {
 									document.body.getElementsByClassName(
 										"comment-container-top"
@@ -230,7 +228,7 @@
 												.getElementsByClassName(
 													"comment-item"
 												)
-												.forEach((c) => {
+												.forEach(c => {
 													if (
 														c.getElementsByClassName(
 															"comment-title"
@@ -309,7 +307,7 @@
 								if (b.flowthread.count > offset + 15) {
 									new IntersectionObserver(
 										(entries, observer) => {
-											entries.forEach((entry) => {
+											entries.forEach(entry => {
 												if (entry.isIntersecting) {
 													getComment(offset + 15);
 													observer.unobserve(
