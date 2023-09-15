@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.9.3
+// @version      2.9.4
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -24,7 +24,7 @@
 	});
 	if (
 		mw.config.get("wgAction") === "view" &&
-		[0, 2, 12, 274].includes(mw.config.get("wgNamespaceNumber"))
+		[0, 2, 4, 12, 274].includes(mw.config.get("wgNamespaceNumber"))
 	) {
 		const api = new mw.Api();
 		function generatePost(post) {
