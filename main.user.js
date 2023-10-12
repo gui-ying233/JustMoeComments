@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.9.4
+// @version      2.10.0
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -27,7 +27,7 @@
 		[0, 2, 4, 12, 274].includes(mw.config.get("wgNamespaceNumber"))
 	) {
 		const api = new mw.Api();
-		function generatePost(post) {
+		const generatePost = post => {
 			let timestamp;
 			if (typeof post.timestamp === "number") {
 				const diff = Date.now() - post.timestamp * 1000;
@@ -133,8 +133,32 @@
 				s.parentNode.replaceChild(_s, s);
 			});
 			return postDiv;
-		}
+		};
 		mw.loader.using(["moment"]).done(() => {
+			const commentCSS = document.createElement("style");
+			commentCSS.innerHTML =
+				"#flowthread{clear:both;padding:1.5em}body.skin-moeskin #flowthread{background-color:var(--theme-background-color)}.comment-container-top:not(:empty){border:1px #ccc solid;border-radius:5px}body.skin-vector .comment-container-top{background-color:rgb(191 234 181 / 20%)}body.skin-moeskin .comment-container-top{background-color:var(--theme-card-background-color)}.comment-container-top>div:first-child{height:24px;line-height:24px;text-indent:1em;font-size:small;border-radius:5px 5px 0 0;font-weight:bold}body.skin-vector .comment-container-top>div:first-child{background-color:rgb(18 152 34 / 47%);color:#fff}body.skin-moeskin .comment-container-top>div:first-child{background-color:var(--theme-accent-color);color:var(--theme-accent-link-color)}.comment-thread{border-top:1px solid rgba(0,0,0,0.13)}.comment-thread .comment-thread{margin-left:40px}.comment-post{padding:10px}.comment-avatar{float:left}.comment-avatar img{width:50px;height:50px}.comment-body{padding-left:60px}.comment-thread>div:not(:first-of-type) .comment-avatar img{width:30px;height:30px}.comment-thread>div:not(:first-of-type) .comment-body{padding-left:40px}.comment-user,.comment-user a{color:#777;font-size:13px;margin-right:8px}.post-content .comment-text{position:static}.comment-text{font-size:13px;line-height:1.5em;margin:.5em 0;word-wrap:break-word;position:relative;overflow:hidden;min-height:1em}.comment-footer{font-size:12px;margin-right:8px;color:#999}.comment-like{margin-left:5px}";
+			document.head.appendChild(commentCSS);
+			const containerTop = document.createElement("div");
+			containerTop.className = "comment-container-top";
+			const container = document.createElement("div");
+			container.className = "comment-container";
+			const postContent = document.createElement("div");
+			postContent.id = "flowthread";
+			postContent.className = "post-content";
+			postContent.appendChild(containerTop);
+			postContent.appendChild(container);
+			switch (mw.config.get("skin")) {
+				case "vector":
+					document.getElementById("footer").appendChild(postContent);
+					break;
+				case "moeskin":
+				default:
+					document
+						.getElementById("moe-global-footer")
+						.appendChild(postContent);
+					break;
+			}
 			fetch(
 				`https://moegirl.uk/api.php?${new URLSearchParams({
 					action: "query",
@@ -147,33 +171,7 @@
 				})}`
 			)
 				.then(a => a.json())
-				.then(a => {
-					const commentCSS = document.createElement("style");
-					commentCSS.innerHTML =
-						"#flowthread{clear:both;padding:1.5em}body.skin-moeskin #flowthread{background-color:var(--theme-background-color)}.comment-container-top:not(:empty){border:1px #ccc solid;border-radius:5px}body.skin-vector .comment-container-top{background-color:rgb(191 234 181 / 20%)}body.skin-moeskin .comment-container-top{background-color:var(--theme-card-background-color)}.comment-container-top>div:first-child{height:24px;line-height:24px;text-indent:1em;font-size:small;border-radius:5px 5px 0 0;font-weight:bold}body.skin-vector .comment-container-top>div:first-child{background-color:rgb(18 152 34 / 47%);color:#fff}body.skin-moeskin .comment-container-top>div:first-child{background-color:var(--theme-accent-color);color:var(--theme-accent-link-color)}.comment-thread{border-top:1px solid rgba(0,0,0,0.13)}.comment-thread .comment-thread{margin-left:40px}.comment-post{padding:10px}.comment-avatar{float:left}.comment-avatar img{width:50px;height:50px}.comment-body{padding-left:60px}.comment-thread>div:not(:first-of-type) .comment-avatar img{width:30px;height:30px}.comment-thread>div:not(:first-of-type) .comment-body{padding-left:40px}.comment-user,.comment-user a{color:#777;font-size:13px;margin-right:8px}.post-content .comment-text{position:static}.comment-text{font-size:13px;line-height:1.5em;margin:.5em 0;word-wrap:break-word;position:relative;overflow:hidden;min-height:1em}.comment-footer{font-size:12px;margin-right:8px;color:#999}.comment-like{margin-left:5px}";
-					document.head.appendChild(commentCSS);
-					const containerTop = document.createElement("div");
-					containerTop.className = "comment-container-top";
-					const container = document.createElement("div");
-					container.className = "comment-container";
-					const postContent = document.createElement("div");
-					postContent.id = "flowthread";
-					postContent.className = "post-content";
-					postContent.appendChild(containerTop);
-					postContent.appendChild(container);
-					switch (mw.config.get("skin")) {
-						case "vector":
-							document
-								.getElementById("footer")
-								.appendChild(postContent);
-							break;
-						case "moeskin":
-						default:
-							document
-								.getElementById("moe-global-footer")
-								.appendChild(postContent);
-							break;
-					}
+				.then(a =>
 					(function getComment(offset) {
 						fetch(
 							`https://moegirl.uk/api.php?${new URLSearchParams({
@@ -323,7 +321,46 @@
 									);
 								}
 							});
-					})(0);
+					})(0)
+				)
+				.catch(() => {
+					fetch(
+						"https://raw.githubusercontent.com/gui-ying233/JustMoeComments/main/flowthread.json"
+					)
+						.then(a => a.json())
+						.then(a => {
+							let f = 0;
+							for (const t of a) {
+								if (
+									t["title"] === mw.config.get("wgPageName")
+								) {
+									a = t.posts;
+									f = 1;
+									break;
+								}
+							}
+							if (!f) return;
+							for (const b of a) {
+								if (+b.status) continue;
+								const _post = generatePost({
+									username: b.username,
+									text: b.text,
+									timestamp: "",
+								});
+								_post.id = `comment-${b.id}`;
+								if (b.parentid) {
+									document
+										.getElementById(`comment-${b.parentid}`)
+										.appendChild(_post);
+								} else {
+									document
+										.getElementsByClassName(
+											"comment-container"
+										)[0]
+										.appendChild(_post);
+								}
+							}
+						});
 				});
 		});
 	}
