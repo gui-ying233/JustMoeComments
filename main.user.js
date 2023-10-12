@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.10.1
+// @version      2.10.2
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -331,7 +331,12 @@
 						.then(a => {
 							let f = 0;
 							for (const t of a) {
-								if (t.title === mw.config.get("wgPageName")) {
+								if (
+									t.title ===
+									mw.config
+										.get("wgPageName")
+										.replace("_", " ")
+								) {
 									a = t.posts;
 									f = 1;
 									break;
