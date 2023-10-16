@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.10.2
+// @version      2.10.3
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -202,89 +202,6 @@
 											.appendChild(_post);
 									}
 								}
-								if (mw.config.get("skin") === "moeskin") {
-									setTimeout(() => {
-										if (
-											[
-												(mw.config.get("wgPageName"),
-												mw.config
-													.get("wgPageName")
-													.replace(
-														/^(.+)\(.+?\)$/,
-														"$1"
-													),
-												document.getElementById(
-													"firstHeading"
-												).innerText),
-											].includes(
-												document.body.getElementsByClassName(
-													"artwork-title"
-												)[0]?.innerText
-											)
-										) {
-											document.body
-												.getElementsByClassName(
-													"comment-item"
-												)
-												.forEach(c => {
-													if (
-														c.getElementsByClassName(
-															"comment-title"
-														)[0].innerText ||
-														c.getElementsByClassName(
-															"comment-content"
-														)[0].innerText
-													) {
-														const post = {
-															like: +c
-																.getElementsByClassName(
-																	"n-button-group"
-																)[0]
-																.innerText.split(
-																	"\n"
-																)[0],
-															username:
-																c.getElementsByClassName(
-																	"comment-author"
-																)[0].innerText,
-															text:
-																c.getElementsByClassName(
-																	"comment-title"
-																)[0].innerText +
-																(c.getElementsByClassName(
-																	"comment-title"
-																)[0]
-																	.innerText &&
-																c.getElementsByClassName(
-																	"comment-content"
-																)[0].innerText
-																	? document.createElement(
-																			"br"
-																	  )
-																			.outerHTML
-																	: "") +
-																c.getElementsByClassName(
-																	"comment-content"
-																)[0].innerText,
-															timestamp:
-																c.getElementsByClassName(
-																	"comment-time"
-																)[0].innerText,
-														};
-														document
-															.getElementsByClassName(
-																"comment-container"
-															)[0]
-															.appendChild(
-																generatePost(
-																	post
-																)
-															);
-													}
-												});
-										}
-									}, 5000);
-								}
 								for (const post of b.flowthread.posts) {
 									const _post = generatePost(post);
 									_post.id = `comment-${post.id}`;
@@ -365,6 +282,72 @@
 							}
 						});
 				});
+			if (mw.config.get("skin") === "moeskin") {
+				setTimeout(() => {
+					if (
+						[
+							(mw.config.get("wgPageName"),
+							mw.config
+								.get("wgPageName")
+								.replace(/^(.+)\(.+?\)$/, "$1"),
+							document.getElementById("firstHeading").innerText),
+						].includes(
+							document.body.getElementsByClassName(
+								"artwork-title"
+							)[0]?.innerText
+						)
+					) {
+						document.body
+							.getElementsByClassName("comment-item")
+							.forEach(c => {
+								if (
+									c.getElementsByClassName("comment-title")[0]
+										.innerText ||
+									c.getElementsByClassName(
+										"comment-content"
+									)[0].innerText
+								) {
+									const post = {
+										like: +c
+											.getElementsByClassName(
+												"n-button-group"
+											)[0]
+											.innerText.split("\n")[0],
+										username:
+											c.getElementsByClassName(
+												"comment-author"
+											)[0].innerText,
+										text:
+											c.getElementsByClassName(
+												"comment-title"
+											)[0].innerText +
+											(c.getElementsByClassName(
+												"comment-title"
+											)[0].innerText &&
+											c.getElementsByClassName(
+												"comment-content"
+											)[0].innerText
+												? document.createElement("br")
+														.outerHTML
+												: "") +
+											c.getElementsByClassName(
+												"comment-content"
+											)[0].innerText,
+										timestamp:
+											c.getElementsByClassName(
+												"comment-time"
+											)[0].innerText,
+									};
+									document
+										.getElementsByClassName(
+											"comment-container"
+										)[0]
+										.appendChild(generatePost(post));
+								}
+							});
+					}
+				}, 5000);
+			}
 		});
 	}
 })();
