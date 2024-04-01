@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.11.1
+// @version      2.12.0
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -58,6 +58,11 @@
 		}</div><div class="comment-footer"><span class="comment-time">${timestamp}</span>${
 			post.like ? `<span class="comment-like">赞 ${post.like}</span>` : ""
 		}</div></div></div>`;
+		postDiv.querySelector(".comment-avatar > a > img").onerror =
+			function () {
+				if (new URL(this.src).host === "moegirl.uk")
+					this.src = `//commons.moegirl.org.cn/extensions/Avatar/avatar.php?user=${post.username}`;
+			};
 		[...postDiv.querySelectorAll("img[src^='/images/']")].forEach(i => {
 			i.src = `//img.moegirl.org.cn/common/${new URL(
 				i.src
