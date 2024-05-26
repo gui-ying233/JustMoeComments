@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.13.0
+// @version      2.13.1
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -145,17 +145,13 @@
 		postContent.className = "post-content";
 		postContent.appendChild(containerTop);
 		postContent.appendChild(container);
-		switch (mw.config.get("skin")) {
-			case "vector":
-				document.getElementById("footer").appendChild(postContent);
-				break;
-			case "moeskin":
-			default:
-				document
-					.getElementById("moe-global-footer")
-					.appendChild(postContent);
-				break;
-		}
+		document
+			.getElementById(
+				mw.config.get("skin") === "vector"
+					? "footer"
+					: "moe-global-footer"
+			)
+			.appendChild(postContent);
 		fetch(
 			`https://moegirl.uk/api.php?${new URLSearchParams({
 				action: "query",
