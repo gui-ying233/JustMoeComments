@@ -29,39 +29,31 @@
 	)
 		return;
 	const api = new mw.Api();
-	const generatePost = post => {
-		let timestamp;
-		if (typeof post.timestamp === "number") {
-			const diff = Date.now() - post.timestamp * 1000;
+	const generatePost = ({ username, text, timestamp, like }) => {
+		let _timestamp;
+		if (typeof timestamp === "number") {
+			const diff = Date.now() - timestamp * 1000;
 			if (diff > 0 && diff < 86400000) {
-				timestamp = moment(post.timestamp * 1000)
+				_timestamp = moment(timestamp * 1000)
 					.locale(mw.config.get("wgUserLanguage"))
 					.fromNow();
 			} else {
-				timestamp = moment(post.timestamp * 1000)
+				_timestamp = moment(timestamp * 1000)
 					.locale(mw.config.get("wgUserLanguage"))
 					.format("LL, HH:mm:ss");
 			}
 		} else {
-			timestamp = post.timestamp;
+			_timestamp = timestamp;
 		}
 		const postDiv = document.createElement("div");
 		postDiv.className = "comment-thread";
-		postDiv.innerHTML = `<div class="comment-post"><div class="comment-avatar"><a href="//moegirl.uk/U:${
-			post.username
-		}"><img src="//moegirl.uk/extensions/Avatar/avatar.php?user=${
-			post.username
-		}" decofing="async" loading="lazy" fetchpriority="low"></a></div><div class="comment-body"><div class="comment-user"><a href="//moegirl.uk/U:${
-			post.username
-		}">${post.username}</a></div><div class="comment-text">${
-			post.text
-		}</div><div class="comment-footer"><span class="comment-time">${timestamp}</span>${
-			post.like ? `<span class="comment-like">赞 ${post.like}</span>` : ""
+		postDiv.innerHTML = `<div class="comment-post"><div class="comment-avatar"><a href="//moegirl.uk/U:${username}"><img src="//moegirl.uk/extensions/Avatar/avatar.php?user=${username}" decofing="async" loading="lazy" fetchpriority="low"></a></div><div class="comment-body"><div class="comment-user"><a href="//moegirl.uk/U:${username}">${username}</a></div><div class="comment-text">${text}</div><div class="comment-footer"><span class="comment-time">${_timestamp}</span>${
+			like ? `<span class="comment-like">赞 ${like}</span>` : ""
 		}</div></div></div>`;
 		postDiv.querySelector(".comment-avatar > a > img").onerror =
 			function () {
 				if (new URL(this.src).host === "moegirl.uk")
-					this.src = `//commons.moegirl.org.cn/extensions/Avatar/avatar.php?user=${post.username}`;
+					this.src = `//commons.moegirl.org.cn/extensions/Avatar/avatar.php?user=${username}`;
 			};
 		[...postDiv.querySelectorAll("img[src^='/images/']")].forEach(i => {
 			i.src = `//img.moegirl.org.cn/common/${new URL(
@@ -271,17 +263,14 @@
 								timestamp: "",
 							});
 							_post.id = `comment-${b.id}`;
-							if (b.parentid) {
-								document
-									.getElementById(`comment-${b.parentid}`)
-									.appendChild(_post);
-							} else {
-								document
-									.getElementsByClassName(
+							(b.parentid
+								? document.getElementById(
+										`comment-${b.parentid}`
+								  )
+								: document.getElementsByClassName(
 										"comment-container"
-									)[0]
-									.appendChild(_post);
-							}
+								  )[0]
+							).appendChild(_post);
 						}
 					});
 			});
