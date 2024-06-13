@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.15.0
+// @version      2.15.1
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -20,11 +20,11 @@
 (async () => {
 	"use strict";
 	if (
-		window.JMC ||
+		!!sessionStorage.getItem("JustMoeComments") ||
 		new URLSearchParams(window.location.search).get("safemode")
 	)
 		return;
-	window.JMC = true;
+	sessionStorage.setItem("JustMoeComments", true);
 	await new Promise(resolve => {
 		const intervId = setInterval(() => {
 			if (typeof mw !== "undefined" && typeof wgULS !== "undefined") {
