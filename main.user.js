@@ -19,12 +19,7 @@
 
 (async () => {
 	"use strict";
-	if (
-		!!sessionStorage.getItem("JustMoeComments") ||
-		new URLSearchParams(window.location.search).get("safemode")
-	)
-		return;
-	sessionStorage.setItem("JustMoeComments", true);
+	if (new URLSearchParams(window.location.search).get("safemode")) return;
 	await new Promise(resolve => {
 		const intervId = setInterval(() => {
 			if (typeof mw !== "undefined" && typeof wgULS !== "undefined") {
