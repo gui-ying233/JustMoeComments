@@ -35,5 +35,5 @@ jobs:
                       git commit -m "Update threeds"
                       git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/gui-ying233/JustMoeComments.git
                   else
-                      echo "No changes to commit"
+                      echo "无新评论"
                   fi
