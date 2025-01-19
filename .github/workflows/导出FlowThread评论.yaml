@@ -31,9 +31,5 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   git add -f flowthread.json
-                  if ! git diff-index --quiet HEAD --; then
-                      git commit -m "Update threeds"
-                      git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/gui-ying233/JustMoeComments.git
-                  else
-                      echo "无新评论"
-                  fi
+                  git commit --allow-empty -m "Update threeds"
+                  git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/gui-ying233/JustMoeComments.git
