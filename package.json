@@ -1,0 +1,23 @@
+{
+	"name": "justmoecomments",
+	"version": "2.15.1",
+	"description": "萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论",
+	"scripts": {
+		"export": "node scripts/导出FlowThread评论"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gui-ying233/JustMoeComments.git"
+	},
+	"keywords": [
+		"tampermonkey",
+		"comments",
+		"moegirlpedia"
+	],
+	"author": "鬼影233",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/gui-ying233/JustMoeComments/issues"
+	},
+	"homepage": "https://github.com/gui-ying233/JustMoeComments"
+}
