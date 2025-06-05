@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.15.1
+// @version      2.15.2
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -169,7 +169,8 @@
 			})}`
 		)
 			.then(a => a.json())
-			.then(a =>
+			.then(a => {
+				if (a.query.pages[0].missing) return;
 				(function getComment(offset) {
 					fetch(
 						`https://moegirl.uk/api.php?${new URLSearchParams({
@@ -236,8 +237,8 @@
 								);
 							}
 						});
-				})(0)
-			)
+				})(0);
+			})
 			.catch(() => {
 				fetch(
 					"https://testingcf.jsdelivr.net/gh/gui-ying233/JustMoeComments/flowthread.json"
