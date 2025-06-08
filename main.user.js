@@ -8,7 +8,8 @@
 // @match        zh.moegirl.org.cn/*
 // @match        mzh.moegirl.org.cn/*
 // @match        mobile.moegirl.org.cn/*
-// @match        *.moegirl.icu/*
+// @match        moegirl.icu/*
+// @match        cube.moegirl.icu/*
 // @match        zh.moegirl.tw/*
 // @match        zh.moegirl.tw/*
 // @match        mzh.moegirl.tw/*
