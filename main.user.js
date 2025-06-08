@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.15.2
+// @version      2.16
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
 // @match        zh.moegirl.org.cn/*
 // @match        mzh.moegirl.org.cn/*
 // @match        mobile.moegirl.org.cn/*
-// @match        moegirl.icu/*
+// @match        *.moegirl.icu/*
 // @match        zh.moegirl.tw/*
 // @match        zh.moegirl.tw/*
 // @match        mzh.moegirl.tw/*
@@ -21,13 +21,31 @@
 	"use strict";
 	if (new URLSearchParams(window.location.search).get("safemode")) return;
 	await new Promise(resolve => {
-		const intervId = setInterval(() => {
-			if (typeof mw !== "undefined" && typeof wgULS !== "undefined") {
-				clearInterval(intervId);
-				resolve();
-			}
-		}, 50);
+		const intervId = setInterval(
+			() => mw?.Api && (clearInterval(intervId), resolve()),
+			50
+		);
 	});
+	window.wgULS ||= (hans, hant, cn, tw, hk, sg, zh, mo, my) =>
+		({
+			zh: zh || hans || hant || cn || tw || hk || sg || mo || my,
+			"zh-hans": hans || cn || sg || my,
+			"zh-hant": hant || tw || hk || mo,
+			"zh-cn": cn || hans || sg || my,
+			"zh-sg": sg || hans || cn || my,
+			"zh-tw": tw || hant || hk || mo,
+			"zh-hk": hk || hant || mo || tw,
+			"zh-mo": mo || hant || hk || tw,
+		}[mw.config.get("wgUserLanguage")] ||
+		zh ||
+		hans ||
+		hant ||
+		cn ||
+		tw ||
+		hk ||
+		sg ||
+		mo ||
+		my);
 	if (
 		mw.config.get("wgAction") !== "view" ||
 		![0, 2, 4, 12, 274].includes(mw.config.get("wgNamespaceNumber"))
