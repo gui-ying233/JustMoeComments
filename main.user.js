@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.16
+// @version      2.16.1
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -23,11 +23,11 @@
 	if (new URLSearchParams(window.location.search).get("safemode")) return;
 	await new Promise(resolve => {
 		const intervId = setInterval(
-			() => mw?.Api && (clearInterval(intervId), resolve()),
+			() => window?.mw?.Api && (clearInterval(intervId), resolve()),
 			50
 		);
 	});
-	window.wgULS ||= (hans, hant, cn, tw, hk, sg, zh, mo, my) =>
+	window.wgULS ??= (hans, hant, cn, tw, hk, sg, zh, mo, my) =>
 		({
 			zh: zh || hans || hant || cn || tw || hk || sg || mo || my,
 			"zh-hans": hans || cn || sg || my,
