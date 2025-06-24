@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JustMoeComments
 // @namespace    https://github.com/gui-ying233/JustMoeComments
-// @version      2.16.1
+// @version      2.16.2
 // @description  萌娘百科看Lih的镜像站的评论，同时集成了作品讨论的评论
 // @author       鬼影233
 // @license      MIT
@@ -16,6 +16,7 @@
 // @match        mobile.moegirl.tw/*
 // @icon         https://moegirl.uk/images/a/a2/%E7%B2%89%E8%89%B2%E5%A4%A7%E7%8C%9B%E5%AD%97.png
 // @supportURL   https://github.com/gui-ying233/JustMoeComments/issues
+// @grant        none
 // ==/UserScript==
 
 (async () => {
